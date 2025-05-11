@@ -1,0 +1,157 @@
+{
+	"name": "NoiseNinja",
+	"image": "mcr.microsoft.com/devcontainers/python:3.10",
+
+	// 👇 Features to add to the Dev Container. More info: https://containers.dev/implementors/features.
+	"features": {
+		"ghcr.io/devcontainers/features/python:1": {
+			"version": "3.10.0"
+		},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/dhoeric/features/google-cloud-cli:1": {
+			"installGkeGcloudAuthPlugin": true
+		},
+		"ghcr.io/frntn/devcontainers-features/gitleaks:1": {
+			"version": "latest"
+		},
+		// "ghcr.io/kvokka/features/codegpt:1": {
+		// 	"version": "latest"
+		// },
+		"ghcr.io/jayree/devcontainer-features/sf-plugins:1": {
+			"plugins": "@jayree/sfdx-plugin-manifest,@jayree/sfdx-plugin-org,@jayree/sfdx-plugin-prettier,@jayree/sfdx-plugin-source"
+		},
+		"ghcr.io/paul-gilber/devcontainer-features/eksctl-homebrew:1": {
+			"version": "latest"
+		},
+		"ghcr.io/casl0/devcontainer-features/android-sdk:1": {
+			"installCmake": true,
+			"cmakeVersion": "3.6.4111459"
+		},
+		"ghcr.io/georgofenbeck/features/thefuck-pipx:1": {},
+		"ghcr.io/dlouwers/devcontainer-features/bob:1": {},
+		"ghcr.io/dlouwers/devcontainer-features/devbox:1": {},
+		"ghcr.io/bartventer/arch-devcontainer-features/gcloud-cli:1": {},
+		"ghcr.io/devcontainers-extra/features/age:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/azure-apiops:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/bash-command:1": {
+			"command": "echo hi!"
+		},
+		"ghcr.io/devcontainers-extra/features/beehive:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/browserify:2": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/ccache-asdf:2": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/cmake:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/codefresh-cli:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/deno:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/dua:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/eas-cli:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/express-generator:2": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/ffmpeg-apt-get:1": {},
+		"ghcr.io/devcontainers-extra/features/gleam:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/gradle-sdkman:2": {
+			"version": "latest",
+			"jdkVersion": "latest",
+			"jdkDistro": "ms"
+		},
+		"ghcr.io/devcontainers-extra/features/gradleprofiler-sdkman:2": {
+			"version": "latest",
+			"jdkVersion": "latest",
+			"jdkDistro": "ms"
+		},
+		"ghcr.io/devcontainers-extra/features/prettier:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/salesforce-cli:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/shopify-cli:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/supabase-cli:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/turborepo-npm:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/wget-apt-get:1": {},
+		"ghcr.io/devcontainers-extra/features/wget-homebrew:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-extra/features/youtube-dl:2": {
+			"version": "latest"
+		}
+	},
+
+	// 👇 Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [8000],
+
+	// 👇 Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-azuretools.vscode-docker",
+				"ms-python.black-formatter",
+				"ms-python.flake8",
+				"ms-python.isort"
+			],
+			"settings": {
+				"python.defaultInterpreterPath": "/usr/local/bin/python",
+				"python.linting.enabled": true,
+				"python.linting.flake8Enabled": true,
+				"python.formatting.provider": "black",
+				"editor.formatOnSave": true,
+				"editor.codeActionsOnSave": {
+					"source.organizeImports": "explicit"
+				}
+			}
+		}
+	},
+
+	// 👇 Environment variables
+	"remoteEnv": {
+		"PYTHONPATH": "${containerWorkspaceFolder}",
+		"TF_CPP_MIN_LOG_LEVEL": "2",
+		"TF_FORCE_GPU_ALLOW_GROWTH": "true"
+	},
+
+	// 👇 Post-create command
+	"postCreateCommand": "bash .devcontainer/setup.sh",
+
+	// 👇 Health check
+	"healthcheck": {
+		"test": ["CMD", "bash", ".devcontainer/healthcheck.sh"],
+		"interval": "30s",
+		"timeout": "10s",
+		"retries": 3,
+		"startPeriod": "40s"
+	},
+
+	// 👇 Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+} 

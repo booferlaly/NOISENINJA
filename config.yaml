@@ -1,0 +1,85 @@
+# Model Configuration
+models:
+  yamnet:
+    weight: 0.4
+    confidence_threshold: 0.5
+    fine_tuned_model_path: "models/yamnet_finetuned.h5"
+  
+  vggish:
+    weight: 0.3
+    confidence_threshold: 0.5
+    fine_tuned_model_path: "models/vggish_finetuned.h5"
+  
+  cnn:
+    weight: 0.3
+    confidence_threshold: 0.5
+    model_path: "models/best_model.pth"
+
+# Post-processing Configuration
+post_processing:
+  window_size: 5
+  min_confidence: 0.5
+  noise_threshold: 0.3
+  smoothing_factor: 0.3
+  
+  # Spectral filtering
+  spectral_filter:
+    low_freq: 20
+    high_freq: 8000
+    filter_order: 4
+  
+  # Class-specific thresholds
+  class_thresholds:
+    "Speech": 0.6
+    "Music": 0.7
+    "Noise": 0.8
+    "Silence": 0.9
+
+# Training Configuration
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  num_epochs: 10
+  validation_split: 0.2
+  early_stopping_patience: 5
+  
+  # Data augmentation
+  augmentation:
+    noise_level: 0.005
+    time_shift: 0.1
+    pitch_shift: 2
+    speed_change: 0.1
+
+# Visualization Configuration
+visualization:
+  spectrogram:
+    n_mels: 128
+    fmax: 8000
+    window_size: 2048
+    hop_length: 512
+  
+  real_time:
+    update_interval: 100  # milliseconds
+    history_length: 100   # number of predictions to show
+    confidence_threshold: 0.5
+
+# Data Collection Configuration
+data_collection:
+  sample_rate: 16000
+  chunk_size: 1024
+  recording_duration: 3  # seconds
+  min_silence_duration: 0.5  # seconds
+  silence_threshold: 0.01
+  output_format: "wav"
+  output_directory: "collected_data"
+  
+  # GPS Configuration
+  gps:
+    enabled: true
+    accuracy_threshold: 10  # meters
+    timeout: 10  # seconds
+    cache_location: true
+    last_location_file: "last_location.json"
+    location_format: "decimal_degrees"  # or "degrees_minutes_seconds"
+    include_altitude: true
+    include_address: true 
